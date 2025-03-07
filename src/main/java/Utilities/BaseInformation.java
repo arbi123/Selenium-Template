@@ -78,7 +78,6 @@ public class BaseInformation {
 
                     // Ensure GeckoDriver is correctly set up
                     System.setProperty("webdriver.gecko.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\TesimTemp\\src\\main\\resources\\geckodriver.exe");
-
                     driver = new FirefoxDriver(firefoxOptions);
                 }
                 case "edge" -> {
