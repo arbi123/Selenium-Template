@@ -17,7 +17,7 @@ import java.util.Map;
 public class BaseInformation {
 
     private static WebDriver driver;
-    private static WebDriverWait wait ;
+    private static WebDriverWait wait  =new WebDriverWait(driver, Duration.ofSeconds(30));;
 
 
     public static BaseInformation getBaseInformation() {
@@ -52,12 +52,8 @@ public class BaseInformation {
                     options.addArguments("--allow-running-insecure-content");
                     options.addArguments("--unsafely-treat-insecure-origin-as-secure=http://213.32.46.87:6070/");
                     options.setAcceptInsecureCerts(true);
-                    options.setHeadless(true);
                     System.setProperty("webdriver.chrome.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\PSQD\\src\\main\\resources\\chromedriver.exe");
                     driver = new ChromeDriver(options);
-                    driver.manage().window().maximize();
-                    driver.manage().window().maximize();
-                    wait = new WebDriverWait(driver, Duration.ofSeconds(10));
                 }
 
                 case "firefox" -> {
@@ -77,8 +73,6 @@ public class BaseInformation {
                     System.setProperty("webdriver.gecko.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\PSQD\\src\\main\\resources\\geckodriver.exe");
 
                     driver = new FirefoxDriver(firefoxOptions);
-                    driver.manage().window().maximize();
-                    wait = new WebDriverWait(driver, Duration.ofSeconds(10));
                 }
                 case "edge" -> {
                     EdgeOptions options = new EdgeOptions();
@@ -94,14 +88,13 @@ public class BaseInformation {
                     options.addArguments("--remote-allow-origins=*");
                     System.setProperty("webdriver.edge.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\PSQD\\src\\main\\resources\\msedgedriver.exe");
                     driver = new EdgeDriver(options);
-                    driver.manage().window().maximize();
-                    wait = new WebDriverWait(driver, Duration.ofSeconds(10));
                 }
                 default -> {
                     System.out.println("Unsupported browser: " + browserType);
                 }
             }
         }
+        driver.manage().window().maximize();
 
         return driver;
     }}
