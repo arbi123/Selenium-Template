@@ -1,6 +1,9 @@
 package Utilities;
 
 import Globals.Globals;
+import org.codehaus.plexus.util.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,7 +13,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +59,7 @@ public class BaseInformation {
                     options.addArguments("--allow-running-insecure-content");
                     options.addArguments("--unsafely-treat-insecure-origin-as-secure=http://213.32.46.87:6070/");
                     options.setAcceptInsecureCerts(true);
-                    System.setProperty("webdriver.chrome.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\PSQD\\src\\main\\resources\\chromedriver.exe");
+                    System.setProperty("webdriver.chrome.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\TesimTemp\\src\\main\\resources\\chromedriver.exe");
                     driver = new ChromeDriver(options);
                 }
 
@@ -70,7 +77,7 @@ public class BaseInformation {
                     firefoxOptions.setAcceptInsecureCerts(true);
 
                     // Ensure GeckoDriver is correctly set up
-                    System.setProperty("webdriver.gecko.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\PSQD\\src\\main\\resources\\geckodriver.exe");
+                    System.setProperty("webdriver.gecko.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\TesimTemp\\src\\main\\resources\\geckodriver.exe");
 
                     driver = new FirefoxDriver(firefoxOptions);
                 }
@@ -86,7 +93,7 @@ public class BaseInformation {
                     options.addArguments("--disable-infobars");
                     options.addArguments("--disable-notifications");
                     options.addArguments("--remote-allow-origins=*");
-                    System.setProperty("webdriver.edge.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\PSQD\\src\\main\\resources\\msedgedriver.exe");
+                    System.setProperty("webdriver.edge.driver", "C:\\Users\\Arbi.topi\\IdeaProjects\\TesimTemp\\src\\main\\resources\\msedgedriver.exe");
                     driver = new EdgeDriver(options);
                 }
                 default -> {
@@ -97,4 +104,14 @@ public class BaseInformation {
         driver.manage().window().maximize();
 
         return driver;
-    }}
+    }
+
+    public String getScreenShot() throws IOException {
+        String timeStamp = new SimpleDateFormat("HHmm_ddMM_yyss").format(new Date());
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        File file = new File(System.getProperty("user.dir")+"//reports//"+timeStamp+".png");
+        FileUtils.copyFile(source,file);
+        return System.getProperty("user.dir")+"//reports//"+ timeStamp +".png";
+    }
+}
