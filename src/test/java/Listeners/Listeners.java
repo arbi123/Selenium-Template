@@ -27,7 +27,6 @@ public class Listeners extends BaseInformation implements ITestListener {
     @Override
     public void onStart(ITestContext Result)
     {
-
     }
 
     @Override
